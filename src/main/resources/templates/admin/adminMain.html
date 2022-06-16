@@ -1,0 +1,60 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/adminLayout">
+<th:block layout:fragment="css">
+    <style>
+        .btn-area {
+            text-align: center;
+            min-height: 800px;
+        }
+        .btn-box {
+
+        }
+        .btn {
+            background: whitesmoke;
+            width: 300px;
+            height: 200px;
+            margin: 30px;
+            line-height: 200px;
+        }
+
+        .btn{
+            font-size: 30px;
+            color: #2470dc;
+        }
+        a{
+            text-decoration: none;
+        }
+    </style>
+</th:block>
+
+<th:block layout:fragment="script">
+    <script>
+
+    </script>
+</th:block>
+
+<div layout:fragment="content">
+    <div class="btn-area">
+        <div class="btn-box">
+            <a th:href="@{/admin/orders}">
+                <div class="btn">
+                    주문내역
+                </div>
+            </a>
+            <a th:href="@{/admin/book}">
+                <div class="btn">
+                    상품관리
+                </div>
+            </a>
+            <a th:href="@{/admin/member}">
+                <div class="btn">
+                    고객관리
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+</html>

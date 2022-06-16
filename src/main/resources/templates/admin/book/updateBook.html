@@ -1,0 +1,137 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/adminLayout">
+
+<th:block layout:fragment="css">
+    <style>
+        .main-area {
+            max-width: 1140px;
+            margin: 0 auto;
+        }
+
+        table th {
+            width: 200px;
+        }
+
+        textarea {
+            resize: none;
+        }
+
+        #btn-area {
+            text-align: center;
+        }
+    </style>
+</th:block>
+
+<th:block layout:fragment="script">
+    <script>
+
+    </script>
+</th:block>
+
+<div layout:fragment="content">
+    <br>
+    <main class="main-area">
+        <form th:action="@{/admin/book/update_ok}" name="frm">
+<!--        <form name="frm">-->
+            <input type="hidden" th:value="${view.book_no}" th:name="book_no">
+            <table class="table caption-top">
+                <thead class="table-light">
+                <th colspan="2">도서등록</th>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="col">도서 번호</th>
+                    <td>
+                        <span th:text="${view.book_no}"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="col">도서명</th>
+                    <td>
+                        <span th:text="${view.book_nm}"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="col">설명</th>
+                    <td>
+                        <textarea cols="25" rows="5" th:value="${view.book_desc}" th:text="${view.book_desc}" readonly></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="col">가격</th>
+                    <td>
+                        <span th:text="${view.book_price}"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="col">재고</th>
+                    <td>
+                        <input type="text" th:value="${view.book_stock}" th:name="book_stock" required>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">표지 이미지</th>
+                    <td th:if="${view.book_img} != null">
+                        <img th:src="@{/imgs/book-imgs/} + ${view.book_img}">
+                    </td>
+                    <td th:unless="${view.book_img} != null">
+                        <img th:src="@{/imgs/book-imgs/default-img.png}">
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">출판사</th>
+                    <td>
+                        <span th:text="${view.book_pub}"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">저자</th>
+                    <td>
+                        <span th:text="${view.book_author}"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">출간일</th>
+                    <td>
+                        <span th:text="${view.book_pub_date}"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">고유번호</th>
+                    <td>
+                        <span th:text="${view.book_isbn}"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">페이지수</th>
+                    <td>
+                        <span th:text="${view.book_page}"></span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="mb-3" id="btn-area">
+                <input class="btn btn-primary" type="submit" value="수정하기">
+                <input class="btn btn-primary" type="reset" value="다시쓰기">
+                <a class="btn btn-primary" th:href="@{/admin/book}">목록보기</a>
+                <input type="submit" value="삭제하기" onclick="btn_click('delete');" class="btn btn-primary">
+            </div>
+        </form>
+    </main>
+</div>
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+
+        function btn_click(str) {
+            if (str == "delete") {
+                frm.action = "/admin/book/delete";
+            }
+        }
+
+        /*]]>*/
+    </script>
+</th:block>
+</html>

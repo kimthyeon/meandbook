@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/layout">
+
+  <th:block layout:fragment="css">
+    <style>
+      textarea{
+        resize: none;
+      }
+
+      #btn-area {
+        text-align: center;
+      }
+    </style>
+  </th:block>
+
+<body>
+<!-- 메인 -->
+<div layout:fragment="content">
+<main class="container">
+  <form th:action="@{/cs/notice/updateNotice_ok}" id="frm">
+    <input type="hidden" th:value="${view.noti_no}" th:name="noti_no">
+    <div class="mb-3">
+      <label for="exampleFormControlInput1" class="form-label">글 제목</label>
+      <input type="text" class="form-control" id="exampleFormControlInput1" th:value="${view.noti_title}" th:name="noti_title">
+    </div>
+
+    <div class="mb-3">
+      <label for="exampleFormControlTextarea" class="form-label">글 내용</label>
+      <textarea class="form-control" id="exampleFormControlTextarea" rows="10" th:value="${view.noti_content}" th:name="noti_content" th:text="${view.noti_content}"></textarea>
+    </div>
+
+    <div class="mb-3" id="btn-area">
+      <input class="btn btn-primary" th:type="submit" value="수정완료" id="update">
+      <a class="btn btn-primary" th:href="@{/cs/notice/deleteNotice_ok(noti_no=${view.noti_no})}">삭제하기</a>
+      <input class="btn btn-primary" type="reset" value="다시쓰기">
+      <a th:href="@{/cs/notice}" class="btn btn-primary">목록으로</a>
+    </div>
+  </form>
+</main>
+</div>
+</body>
+</html>

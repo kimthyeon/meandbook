@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/layout">
+<th:block layout:fragment="css">
+    <style>
+      textarea {
+        resize: none;
+      }
+
+      #btn-area {
+        text-align: center;
+      }
+
+      a {
+        text-decoration: none;
+        color: #777;
+      }
+    </style>
+</th:block>
+
+<div layout:fragment="content">
+<main class="container">
+
+  <div class="mb-3">
+      <span th:switch="${q.q_cate}">
+        <b><span th:case="1">[반품, 교환 문의] </span></b>
+        <b><span th:case="2">[결제 문의] </span></b>
+        <b><span th:case="3">[상품 문의] </span></b>
+        <b><span th:case="4">[배송 문의] </span></b>
+        <b><span th:case="5">[개인정보 문의] </span></b>
+        <b><span th:case="6">[기타 문의] </span></b>
+      </span>
+    &nbsp;
+      <span th:text="${q.q_title}"/>
+  </div>
+
+  <hr>
+
+  <div class="border border-secondary p-2 mb-2 border-opacity-25">
+    <span th:text="${q.q_content}"></span>
+  </div>
+
+  <div class="mb-3" id="btn-area">
+    <a class="btn btn-primary" th:href="@{/cs/qna/updateQnaQ(q_no=${q.q_no})}" th:text="'문의수정'"/>
+    <a class="btn btn-primary" th:href="@{/cs/qna/deleteQnaQ(q_no=${q.q_no})}" th:text="'문의삭제'"/>
+    <a class="btn btn-primary" th:href="@{/cs/qna/memListQna}">목록으로</a>
+  </div>
+
+  <div class="my-3 p-3 bg-body rounded shadow-sm">
+    <p>문의 답변</p>
+
+    <th:block class="d-flex text-muted pt-3" th:if="${a} != null">
+      <p class="border border-secondary p-2 mb-2 border-opacity-25">
+        <span><strong>나와책</strong></span>
+        &nbsp;
+        <span th:text="${a?.a_date}"></span>
+        <br><br>
+        <span th:text="${a?.a_content}" class="d-block"></span>
+      </p>
+    </th:block>
+
+    <th:block th:unless="${a} != null">
+      <p class="border border-secondary p-2 mb-2 border-opacity-25">
+        <span th:text="'아직 답변이 없습니다.'"></span>
+      </p>
+    </th:block>
+    <br>
+  </div>
+</main>
+</div>
+</html>

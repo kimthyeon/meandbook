@@ -1,0 +1,140 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/adminLayout">
+
+<th:block layout:fragment="css">
+    <style>
+        .main-area {
+            max-width: 1140px;
+            margin: 0 auto;
+        }
+
+        table th {
+            width: 200px;
+        }
+
+        textarea {
+            resize: none;
+        }
+
+        #btn-area {
+            text-align: center;
+        }
+    </style>
+</th:block>
+
+<th:block layout:fragment="script">
+    <script>
+
+    </script>
+</th:block>
+
+<div layout:fragment="content">
+    <br>
+    <main class="main-area">
+        <form th:action="@{/admin/book/insertBook}" method="post" enctype="multipart/form-data">
+            <table class="table caption-top">
+                <thead class="table-light">
+                <th colspan="2">도서등록</th>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="col">대분류</th>
+                    <td>
+                        <input type="radio" name="nation" value="1" checked> 국내
+                        <input type="radio" name="nation" value="2"> 해외
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="col">소분류</th>
+                    <td>
+                        <select name="category">
+                            <option value="11" selected>소설/시/희곡</option>
+                            <option value="11">에세이</option>
+                            <option value="21">경제/경영</option>
+                            <option value="22">자기계발</option>
+                            <option value="31">역사</option>
+                            <option value="32">정치/사회</option>
+                            <option value="41">수험서</option>
+                            <option value="42">대학교재</option>
+                            <option value="43">어린이</option>
+                            <option value="61">여행</option>
+                            <option value="71">만화</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="col">도서명</th>
+                    <td>
+                        <input type="text" name="book_nm" required>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="col">설명</th>
+                    <td>
+                        <textarea cols="25" name="book_desc" rows="5" required></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="col">가격</th>
+                    <td>
+                        <input type="text" name="book_price" required>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="col">재고</th>
+                    <td>
+                        <input type="text" name="book_stock" required>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">표지 이미지</th>
+                    <td>
+                        <div class="mb-3">
+                            <input class="form-control" name="book_img" type="file">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">출판사</th>
+                    <td>
+                        <input type="text" name="book_pub" required>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">저자</th>
+                    <td>
+                        <input type="text" name="book_author" required>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">출간일</th>
+                    <td>
+                        <input type="date" name="book_pub_date" required>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">고유번호</th>
+                    <td>
+                        <input type="text" name="book_isbn" required>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">페이지수</th>
+                    <td>
+                        <input type="text" name="book_page" required>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="mb-3" id="btn-area">
+                <input class="btn btn-primary" type="submit" value="등록하기">
+                <input class="btn btn-primary" type="reset" value="다시쓰기">
+                <a class="btn btn-primary" th:href="@{/admin/book}">목록보기</a>
+            </div>
+        </form>
+    </main>
+</div>
+
+</html>

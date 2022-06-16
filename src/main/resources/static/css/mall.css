@@ -1,0 +1,134 @@
+#shelf td, th{
+    width: 200px;
+    text-align: center;
+}
+td {
+    margin: auto;
+    text-align: center;
+    vertical-align: middle;
+}
+img{
+    width: 100px;
+    height: 150px;
+}
+.shelf-wrapper{
+    max-width: 1140px;
+    text-align: center;
+    margin: 0 auto;
+}
+
+/*viewBook.html에서 사용하는 스타일*/
+.product{
+    display: flex;
+    margin: 0 auto;
+    justify-content: center;
+}
+.img-area img{
+    width: 300px;
+    height: 450px;
+}
+.info-title{
+    height: 400px;
+    width: 100px;
+    padding: 10px;
+}
+.info-area{
+    width: 300px;
+    height: 450px;
+    padding: 10px;
+    padding-top: 50px;
+}
+.book-title{
+    font-size: 30px;
+}
+#btn-area{
+    height: 167px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.btn {
+    text-align: center;
+}
+.price{
+    text-align: right;
+}
+#qty{
+    width: 40px;
+}
+.review-area{
+    text-align: center;
+}
+.review-area table{
+    margin: 0 auto;
+    border: 1px #2499dc solid;
+}
+.review-area table td{
+    padding: 10px 20px ;
+}
+
+.review-area .title{
+    width: 300px;
+    text-align: left;
+}
+.review-area .content{
+    border-top: #2470dc 1px solid;
+    width: 600px;
+    height: 100px;
+    text-align: left;
+    vertical-align: top;
+}
+.review-area .rating{
+    width: 150px;
+    text-align: right;
+}
+.review-area .date{
+    width: 150px;
+    text-align: right;
+    vertical-align: bottom;
+}
+.review-area .id{
+    width: 150px;
+    font-weight: bold;
+    font-size: 25px;
+}
+.cmt-area .id{
+
+}
+.pagination{
+    justify-content: center !important;
+}
+.right-btn{
+    text-align: right;
+    width: 80%;
+}
+.flex-wrapper{
+    display: flex;
+    justify-content: center;
+    line-height: 50px;
+}
+#rev_title{
+    height: 25px;
+    width: 800px;
+}
+#rev_content{
+    height: 400px;
+    width: 800px;
+}
+.title-area{
+    padding-right: 30px;
+}
+
+.main-area {
+    max-width: 1140px;
+    margin: 0 auto;
+}
+
+#shelf {
+    margin: 0 auto;
+}
+
+.button {
+    margin: 10px;
+}

@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/layout">
+
+  <th:block layout:fragment="css">
+    <style>
+      textarea{
+        resize: none;
+      }
+
+      #btn-area {
+        text-align: center;
+      }
+    </style>
+  </th:block>
+<body>
+
+<!-- 메인 -->
+<div layout:fragment="content">
+<main class="container">
+  <div class="mb-3">
+<!--    <div class="form-label">-->
+<!--      <b>공지 제목</b>-->
+<!--    </div>-->
+    <div>
+      <b><span th:text="${view.noti_title}"></span></b>
+    </div>
+  </div>
+
+  <hr>
+
+  <div style="text-align: right">
+    <span><b>[관리자]</b></span>
+    <span th:text="${view.noti_date}"></span>
+  </div>
+  <br>
+  <div class="mb-3">
+<!--    <div class="form-label">글 내용</div>-->
+    <div th:text="${view.noti_content}"></div>
+  </div>
+    <br>
+  <div class="mb-3" id="btn-area">
+    <span th:if="${session.isAdmin}==1">
+      <a th:href="@{/cs/notice/updateNotice(noti_no=${view.noti_no})}" class="btn btn-primary">수정하기</a>
+      <a th:href="@{/cs/notice/delete_ok(noti_no=${view.noti_no})}" class="btn btn-primary">삭제하기</a>
+    </span>
+    <!--목록 제외하고는 관리자만 보이게, 목록은 자바스크립트 써서 뒤로가기 해도 될 듯-->
+    <a th:href="@{/cs/notice}" class="btn btn-primary">목록으로</a>
+  </div>
+
+</main>
+</div>
+</body>
+</html>

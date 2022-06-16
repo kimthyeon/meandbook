@@ -1,0 +1,111 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/layout">
+
+<th:block layout:fragment="css">
+  <style>
+    .carousel {
+      margin-bottom: 30px;
+    }
+  </style>
+</th:block>
+
+<!-- 메인 -->
+<div layout:fragment="content">
+  <main class="container">
+    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item">
+          <img src="/imgs/main1.png" width="100%" height="400">
+        </div>
+        <div class="carousel-item active">
+          <img src="/imgs/main2.png" width="100%" height="400">
+        </div>
+        <div class="carousel-item">
+            <img src="/imgs/main3.png" width="100%" height="400">
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+
+    <div class="row mb-2">
+      <div class="col-md-6">
+        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+          <div class="col p-4 d-flex flex-column position-static">
+            <strong class="d-inline-block mb-2 text-primary">베스트 셀러</strong>
+            <h3 class="mb-0" th:text="${best?.book_nm}">책제목입니다.</h3>
+            <div class="mb-1 text-muted" th:text="${best?.book_author}">저자</div>
+            <p class="card-text mb-auto" th:text="${best?.book_desc}">이 곳은 책 내용을 소개하는 공간입니다.이 곳은 책 내용을 소개하는 공간입니다.</p>
+            <a th:href="@{/mall/viewBook(book_no=${best?.book_no})}" class="stretched-link">책보러가기</a>
+          </div>
+          <div class="col-auto d-none d-lg-block border border-1">
+<!--            <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>-->
+            <th:block th:if="${best?.book_img} == null">
+              <img class="bd-placeholder-img" width="200" height="250" th:src="@{/imgs/book-imgs/default-img.png}">
+            </th:block>
+            <th:block th:unless="${best?.book_img} == null">
+              <img class="bd-placeholder-img" width="200" height="250" th:src="@{/imgs/book-imgs/} + ${best.book_img}">
+            </th:block>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+          <div class="col p-4 d-flex flex-column position-static">
+            <strong class="d-inline-block mb-2 text-success">화제의 신간</strong>
+            <h3 class="mb-0" th:text="${mon_sp?.book_nm}">>책제목입니다.</h3>
+            <div class="mb-1 text-muted" th:text="${mon_sp?.book_author}">저자</div>
+            <p class="mb-auto" th:text="${mon_sp?.book_desc}">이 곳은 책 내용을 소개하는 공간입니다.이 곳은 책 내용을 소개하는 공간입니다.</p>
+            <a th:href="@{/mall/viewBook(book_no=${mon_sp?.book_no})}" class="stretched-link">책보러가기</a>
+          </div>
+          <div class="col-auto d-none d-lg-block border border-1">
+<!--            <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>-->
+            <th:block th:if="${mon_sp?.book_img} == null">
+              <img class="bd-placeholder-img" width="200" height="250" th:src="@{/imgs/book-imgs/default-img.png}">
+            </th:block>
+            <th:block th:unless="${mon_sp?.book_img} == null">
+              <img class="bd-placeholder-img" width="200" height="250" th:src="@{/imgs/book-imgs/} + ${mon_sp.book_img}">
+            </th:block>
+          </div>
+        </div>
+      </div>
+    </div>
+
+      <div class="col-md-4">
+        <div class="position-sticky" style="top: 2rem;">
+          <div class="p-4 mb-3 bg-light rounded">
+            <h4 class="fst-italic">오늘의 명언</h4>
+            <p class="mb-0">책을 읽읍시다.책을 읽읍시다.책을 읽읍시다.책을 읽읍시다.책을 읽읍시다.책을 읽읍시다.</p>
+          </div>
+
+<!--          <div class="p-4">-->
+<!--            <h4 class="fst-italic">쇼핑</h4>-->
+<!--            <ol class="list-unstyled mb-0">-->
+<!--              <li><a href="#">베스트셀러</a></li>-->
+<!--              <li><a href="#">카테고리별 도서검색</a></li>-->
+<!--              <li><a href="#">도서검색</a></li>-->
+<!--            </ol>-->
+<!--          </div>-->
+
+<!--          <div class="p-4">-->
+<!--            <h4 class="fst-italic">고객센터</h4>-->
+<!--            <ol class="list-unstyled">-->
+<!--              <li><a href="#">공지사항</a></li>-->
+<!--              <li><a href="#">FAQ</a></li>-->
+<!--              <li><a href="#">1:1 문의</a></li>-->
+<!--            </ol>-->
+<!--          </div>-->
+        </div>
+      </div>
+
+  </main>
+</div>
+</html>

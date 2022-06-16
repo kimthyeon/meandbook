@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.meandbooksteam2.shoppingmall.dao.cs.NoticeServiceDao">
+
+    <!--공지 작성 - 날짜 정보는 DateTime으로 테이블에 선언되어 있던데 디폴트 값으로 넣는지 여부에 따라 추가 예정-->
+    <insert id="insertNotice" parameterType="hashmap">
+        insert into notice
+            (noti_title
+            ,noti_content
+            ,noti_date)
+        value
+            (#{noti_title}
+            ,#{noti_content}
+            ,SYSDATE())
+    </insert>
+
+    <!--공지 삭제-->
+    <delete id="deleteNotice" parameterType="hashmap">
+        delete from notice where noti_no = #{noti_no}
+    </delete>
+
+    <!--공지 수정-->
+    <update id="updateNoticeStatus" parameterType="hashmap">
+        update notice set noti_title = #{noti_title}
+                        , noti_content = #{noti_content}
+                        , noti_date = sysdate()
+        where noti_no = #{noti_no}
+    </update>
+
+
+    <!--개별 공지 조회-->
+    <select id="viewNotice" parameterType="hashmap" resultType="NoticeDto">
+        select noti_no
+             , noti_title
+             , noti_content
+             , date_format(NOTI_DATE,'%m-%d %h:%i') "NOTI_DATE"
+        from notice
+        where noti_no = #{noti_no}
+    </select>
+
+
+    <select id="listNotice" parameterType="NoticeDto" resultType="NoticeDto">
+        SELECT
+            NOTI_NO, NOTI_TITLE, date_format(NOTI_DATE,'%m-%d %h:%i') "NOTI_DATE"
+        FROM
+        notice
+<!--        WHERE-->
+<!--        <if test="searchKeyword != null and searchKeyword != ''">-->
+<!--            <choose>-->
+
+<!--                <when test="searchType != null and searchType != ''">-->
+<!--                    <choose>-->
+<!--                        <when test="'noti_title'.equals(searchType)">-->
+<!--                            AND noti_title LIKE CONCAT('%', #{searchKeyword}, '%')-->
+<!--                        </when>-->
+<!--                    </choose>-->
+<!--                </when>-->
+
+<!--                <otherwise>-->
+<!--                    AND-->
+<!--                    (-->
+<!--                    noti_title LIKE CONCAT('%', #{searchKeyword}, '%')-->
+<!--                    )-->
+<!--                </otherwise>-->
+<!--            </choose>-->
+<!--        </if>-->
+        ORDER BY
+            noti_no desc
+        LIMIT
+        #{paginationInfo.firstRecordIndex}, #{recordsPerPage}
+    </select>
+
+    <select id="selectNoticeTotalCount" parameterType="NoticeDto" resultType="int">
+        SELECT
+            COUNT(*)
+        FROM
+            notice
+<!--        where-->
+<!--        <if test="searchKeyword != null and searchKeyword != ''">-->
+<!--            <choose>-->
+
+<!--                <when test="searchType != null and searchType != ''">-->
+<!--                    <choose>-->
+<!--                        <when test="'noti_title'.equals(searchType)">-->
+<!--                            AND noti_title LIKE CONCAT('%', #{searchKeyword}, '%')-->
+<!--                        </when>-->
+<!--                    </choose>-->
+<!--                </when>-->
+
+<!--                <otherwise>-->
+<!--                    AND-->
+<!--                    (-->
+<!--                    noti_title LIKE CONCAT('%', #{searchKeyword}, '%')-->
+<!--                    )-->
+<!--                </otherwise>-->
+<!--            </choose>-->
+<!--        </if>-->
+    </select>
+
+    <!--검색 목록-->
+    <select id="listSearchNotice" parameterType="NoticeDto" resultType="NoticeDto">
+        SELECT
+            NOTI_NO, NOTI_TITLE, date_format(NOTI_DATE,'%m-%d %h:%i') "NOTI_DATE"
+        FROM
+        notice
+        where NOTI_TITLE like concat('%', #{searchKeyword}, '%')
+        ORDER BY
+            noti_no desc
+        LIMIT
+        #{paginationInfo.firstRecordIndex}, #{recordsPerPage}
+    </select>
+
+    <select id="selectNoticeSearchTotalCount" parameterType="NoticeDto" resultType="int">
+        SELECT
+            COUNT(*)
+        FROM
+            notice
+        where NOTI_TITLE like concat('%', #{searchKeyword}, '%')
+        <!--        where-->
+        <!--        <if test="searchKeyword != null and searchKeyword != ''">-->
+        <!--            <choose>-->
+
+        <!--                <when test="searchType != null and searchType != ''">-->
+        <!--                    <choose>-->
+        <!--                        <when test="'noti_title'.equals(searchType)">-->
+        <!--                            AND noti_title LIKE CONCAT('%', #{searchKeyword}, '%')-->
+        <!--                        </when>-->
+        <!--                    </choose>-->
+        <!--                </when>-->
+
+        <!--                <otherwise>-->
+        <!--                    AND-->
+        <!--                    (-->
+        <!--                    noti_title LIKE CONCAT('%', #{searchKeyword}, '%')-->
+        <!--                    )-->
+        <!--                </otherwise>-->
+        <!--            </choose>-->
+        <!--        </if>-->
+    </select>
+
+</mapper>

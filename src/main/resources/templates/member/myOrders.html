@@ -1,0 +1,63 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/layout">
+<head th:replace="fragments/head::headFragment">
+</head>
+<!-- 메인 -->
+<div layout:fragment="content">
+  <link rel="stylesheet" th:href="@{/css/member.css}">
+  <!-- 본문 영역 -->
+  <div class="container">
+    <h2>주문 내역</h2>
+    <div class="table-responsive">
+      <table class="table table-striped table-sm">
+        <colgroup>
+          <col width="10%">
+          <col width="15%">
+          <col width="10%">
+          <col width="10%">
+          <col width="10%">
+          <col width="15%">
+          <col width="20%">
+          <col width="10%">
+        </colgroup>
+        <thead>
+        <tr>
+          <th scope="col">주문번호</th>
+          <th scope="col">주문상품</th>
+          <th scope="col">주문금액</th>
+          <th scope="col">받으시는분</th>
+          <th scope="col" colspan="3">배송지</th>
+          <th scope="col" colspan="1">주문상태</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="orders : ${list}">
+          <td>
+            <th:block>
+              <a th:text="${orders.orders_no}" th:href="@{/member/viewOrders(orders_no=${orders.orders_no})}">
+
+              </a>
+            </th:block>
+          </td>
+          <td th:text="|${orders.book.book_nm} ${orders.orders_qty}권|">random</td>
+          <td th:text="${orders.orders_qty} * ${orders.book.book_price} + 원 ">data</td>
+          <td th:text="${orders.orders_nm}">placeholder</td>
+          <td th:text="${orders.orders_addr1}">text</td>
+          <td th:text="${orders.orders_addr2}">text</td>
+          <td th:text="${orders.orders_addr3}">text</td>
+          <td th:switch="${orders.orders_status}">
+            <th:block th:case="0">주문취소</th:block>
+            <th:block th:case="1">배송대기</th:block>
+            <th:block th:case="2">배송중</th:block>
+            <th:block th:case="3">배송완료</th:block>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+</html>
+

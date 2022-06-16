@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/layout">
+  <th:block layout:fragment="css">
+    <style>
+        .main-area {
+          max-width: 1140px;
+          margin: 0 auto;
+        }
+
+        #title {
+          margin-bottom: 30px;
+        }
+
+        .pagination {
+            justify-content: center;
+        }
+
+        .search {
+            padding: 0 !important;
+        }
+
+    </style>
+  </th:block>
+<body>
+
+<!-- 메인 -->
+  <div layout:fragment="content">
+  <main class="main-area">
+    <div id="title">
+      <h1>공지사항</h1>
+    </div>
+
+    <nav class="navbar">
+      <div class="container-fluid search">
+        <form class="d-flex" role="search" th:action="@{/cs/notice/searchNotice}">
+          <input class="form-control me-2" type="text" placeholder="공지 제목을 입력하세요" aria-label="Search" th:name="searchKeyword">
+          <input class="btn btn-outline-success" th:type="submit" value="검색">
+        </form>
+      </div>
+    </nav>
+
+    <table class="table caption-top">
+      <colgroup>
+          <col width="10%">
+          <col width="65%">
+          <col width="25%">
+      </colgroup>
+      <thead class="table-light">
+        <tr>
+          <th scope="col">번호</th>
+          <th scope="col">제목</th>
+          <th scope="col">등록일</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:if="${not #lists.isEmpty(list)}" th:each="list : ${list}">
+          <td th:text="${list.noti_no}"></td>
+          <td class="text-left">
+<!--            <a th:href="|@{/cs/notice/viewNotice}${params.makeQueryString(params.currentPageNo)}&noti_no=${list.noti_no}|" th:text="${list.noti_title}"></a>-->
+            <a th:href="@{/cs/notice/viewNotice(noti_no=${list.noti_no})}" th:text="${list.noti_title}"></a>
+          </td>
+          <td th:text="${list.noti_date}"></td>
+        </tr>
+        <tr th:unless="${not #lists.isEmpty(list)}" style="text-align: center">
+          <td colspan="5">조회된 결과가 없습니다.</td>
+        </tr>
+      </tbody>
+    </table>
+  </main>
+    <th:block layout:fragment="paging">
+      <nav th:replace="fragments/common :: pagination" class="pagination"></nav>
+    </th:block>
+  </div>
+
+</body>
+
+
+
+<th:block layout:fragment="script">
+  <script th:inline="javascript">
+    /*<![CDATA[*/
+
+    function movePage(uri, queryString) {
+      location.href = uri + queryString;
+    }
+
+    /*]]>*/
+  </script>
+</th:block>
+</html>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.meandbooksteam2.shoppingmall.dao.orders.OrdersDao">
+
+    <!--Orders에서 JOIN 할 때 필요한 것들을 정의함-->
+    <resultMap id="Book" type="com.meandbooksteam2.shoppingmall.dto.BookDto">
+        <result column="book_img" property="book_img"></result>
+        <result column="book_nm" property="book_nm"></result>
+    </resultMap>
+    <resultMap id="OrdersDto" type="OrdersDto">
+        <result column="ORDERS_NO" property="orders_no"/>
+        <result column="ORDERS_DATE" property="orders_date"/>
+        <result column="ORDERS_NM" property="orders_nm"/>
+        <result column="ORDERS_PHONENO" property="orders_phoneNo"/>
+        <result column="ORDERS_ADDR1" property="orders_addr1"/>
+        <result column="ORDERS_ADDR2" property="orders_addr2"/>
+        <result column="ORDERS_ADDR3" property="orders_addr3"/>
+        <result column="ORDERS_QTY" property="orders_qty"/>
+        <collection property="book" resultMap="Book"></collection>
+    </resultMap>
+
+    <!--주문완료창에서 방금 DB에 삽입된 주문에 대한 자세한 정보를 가져오는 쿼리-->
+    <select id="getOneOrder" resultMap="OrdersDto" parameterType="hashmap">
+        SELECT O.ORDERS_NO
+             , B.BOOK_NM
+             , B.BOOK_IMG
+             , O.ORDERS_NM
+             , O.ORDERS_PHONENO
+             , O.ORDERS_ADDR1
+             , O.ORDERS_ADDR2
+             , O.ORDERS_ADDR3
+             , date_format(O.ORDERS_DATE,'%y-%m-%d %h:%i') "ORDERS_DATE"
+             , O.ORDERS_QTY
+          FROM ORDERS O JOIN BOOK B
+          on o.book_no = b.book_no
+         WHERE ORDERS_NO = #{orders_no}
+    </select>
+
+    <!--hashmap으로 받아온 값들을 db에 삽입하는 DML-->
+    <insert id="insertOrder" parameterType="hashmap">
+        INSERT INTO ORDERS(ORDERS_NO, MEM_NO, BOOK_NO, ORDERS_NM,
+                           ORDERS_PHONENO, ORDERS_ADDR1, ORDERS_ADDR2, ORDERS_ADDR3,
+                           ORDERS_DATE, ORDERS_QTY)
+                    VALUES(#{orders_no}, #{mem_no}, #{book_no}, #{orders_nm},
+                           #{orders_phoneno}, #{orders_addr1}, #{orders_addr2}, #{orders_addr3},
+                           sysdate(), #{orders_qty})
+    </insert>
+    <!--위의 비회원용-->
+    <insert id="insertNoMemOrder" parameterType="hashmap">
+        INSERT INTO no_mem_orders(ORDERS_NO, BOOK_NO, ORDERS_NM,
+                           ORDERS_PHONENO, ORDERS_ADDR1, ORDERS_ADDR2, ORDERS_ADDR3,
+                           ORDERS_DATE, ORDERS_QTY)
+        VALUES(#{orders_no}, #{book_no}, #{orders_nm},
+               #{orders_phoneno}, #{orders_addr1}, #{orders_addr2}, #{orders_addr3},
+               sysdate(), #{orders_qty})
+    </insert>
+
+    <!--주문번호를 넣기위해 오늘 주문 건수를 가져오는 쿼리-->
+    <select id="getTodayOrder" resultType="_int">
+        SELECT COUNT(*) FROM ORDERS WHERE ORDERS_DATE >= CURDATE()
+    </select>
+    <!--위의 비회원용-->
+    <select id="getTodayNoMemOrder" resultType="_int">
+        SELECT COUNT(*) FROM no_mem_orders WHERE ORDERS_DATE >= CURDATE()
+    </select>
+
+    <update id="subBookStock" parameterType="hashmap">
+        update book set BOOK_STOCK = BOOK_STOCK - #{orders_qty} where BOOK_NO = #{book_no}
+    </update>
+
+    <!--주문페이지에서 default 값을 주기위해 MEMBER 테이블에서 일부 값들을 가져오는 쿼리-->
+    <select id="getMyInfo" parameterType="string" resultType="MemberDto">
+        SELECT MEM_ADDR1
+             , MEM_ADDR2
+             , MEM_ADDR3
+             , MEM_PHONENO
+             , MEM_EMAIL
+             , MEM_NM
+          FROM MEMBER
+         WHERE MEM_NO = #{mem_no}
+    </select>
+
+    <!--주문페이지에서 책정보를 주기위해 book 테이블에서 일부 값들을 가져오는 쿼리-->
+    <select id="getBookInfo" parameterType="hashmap" resultType="BookDto">
+        SELECT BOOK_NM
+             , BOOK_PRICE
+             , BOOK_STOCK
+             , BOOK_AUTHOR
+             , BOOK_PUB
+             , BOOK_IMG
+             , BOOK_PRICE
+          FROM book
+         WHERE book_no = #{book_no}
+    </select>
+
+    <!--마일리지 사용시 차감-->
+    <update id="updateMileageDown" parameterType="string">
+        update member set MEM_MILEAGE = MEM_MILEAGE - #{mem_mileage} where MEM_NO = #{mem_no};
+    </update>
+
+    <!--주문완료시 마일리지 적립-->
+    <update id="updateMileageUp" parameterType="string">
+        update member set MEM_MILEAGE = MEM_MILEAGE + #{mem_mileage} where MEM_NO = #{mem_no};
+    </update>
+    <select id="getCartBookInfo" parameterType="string" resultType="BookDto">
+        select B.BOOK_NM
+             , B.BOOK_NO
+             , B.BOOK_PRICE
+             , B.BOOK_STOCK
+             , B.BOOK_AUTHOR
+             , B.BOOK_PUB
+             , B.BOOK_IMG
+             , B.BOOK_PRICE
+             , B.BOOK_STOCK
+        from cart c join book b
+                         on c.book_no = b.book_no
+        WHERE C.CART_NO = #{cart_no}
+    </select>
+</mapper>

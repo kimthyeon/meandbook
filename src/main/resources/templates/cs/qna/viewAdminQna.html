@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/layout">
+  <th:block layout:fragment="css">
+    <style>
+      textarea {
+        resize: none;
+      }
+
+      #btn-area {
+        text-align: center;
+      }
+
+      a {
+        text-decoration: none;
+        color: #777;
+      }
+    </style>
+  </th:block>
+
+  <div layout:fragment="content">
+<!-- 메인 -->
+<main class="container">
+  <div class="mb-3">
+      <span th:switch="${q.q_cate}">
+        <b><span th:case="1">[반품, 교환 문의] </span></b>
+        <b><span th:case="2">[결제 문의] </span></b>
+        <b><span th:case="3">[상품 문의] </span></b>
+        <b><span th:case="4">[배송 문의] </span></b>
+        <b><span th:case="5">[개인정보 문의] </span></b>
+        <b><span th:case="6">[기타 문의] </span></b>
+      </span>
+    <span th:text="${q.q_title}"/>
+  </div>
+
+  <hr>
+
+  <div class="mb-3">
+    <span th:text="${q.q_content}"></span>
+  </div>
+
+  <div class="my-3 p-3 bg-body rounded shadow-sm">
+    <p><b>문의 답변</b></p>
+    <div th:if="${a} == null">
+      <form th:action="@{/cs/qna/insertQnaA_ok}">
+        <div class="input-group has-validation">
+          <input type="hidden" th:value="${q.q_no}" th:name="q_no">
+          <input type="hidden" th:value="${q.mem_no}" th:name="mem_no">
+          <div class="input-group mb-3" id="btn-area">
+            <input type="text" class="form-control" placeholder="답변을 입력하세요" th:name="a_content">
+            <input class="btn btn-primary" th:type="submit" value="등록">
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div th:unless="${a} == null">
+      <form th:action="@{/cs/qna/updateQnaA}">
+        <input type="hidden" th:value="${q.q_no}" th:name="q_no">
+        <p>
+          <strong class="d-block text-gray-dark">관리자</strong>
+          <span th:text="${a_date}"></span>
+        </p>
+        <div class="input-group mb-3">
+          <input class="form-control" th:value="${a.a_content}" type="text" th:name="a_content">
+          <input class="btn btn-outline-primary" th:type="submit" value="수정완료">
+          <a class="btn btn-outline-primary" role="button" th:href="@{/cs/qna/deleteQnaA(q_no=${q.q_no})}">삭제</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</main>
+  </div>
+</html>

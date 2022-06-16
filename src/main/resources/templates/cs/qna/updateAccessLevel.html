@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/layout">
+<th:block layout:fragment="css">
+    <style>
+        .main-area {
+            max-width: 1140px;
+            min-height: 300px;
+            margin: 0 auto;
+            margin-top: 150px;
+            text-align: center;
+        }
+
+        #btn-area {
+            text-align: center;
+        }
+    </style>
+</th:block>
+
+<!-- 메인 -->
+    <div layout:fragment="content">
+    <main class="main-area">
+        <div id="msg-box">
+            <h1>답변을 완료했습니다.</h1>
+        </div>
+        <br>
+        <form th:action="@{/cs/qna/updateAccessLevel_ok}">
+            <input type="hidden" th:value="1" th:name="access_level">
+            <input type="hidden" th:value="${q_no}" th:name="q_no">
+            <div class="mb-3" id="btn-area">
+                <input class="btn btn-primary" type="submit" value="확인">
+            </div>
+        </form>
+    </main>
+    </div>
+</html>

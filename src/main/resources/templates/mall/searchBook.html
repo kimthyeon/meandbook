@@ -1,0 +1,84 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/layout">
+<th:block layout:fragment="css">
+  <style>
+    select {
+      width: 20%;
+    }
+
+    .main-area {
+      max-width: 1140px;
+      margin: 0 auto;
+    }
+
+    .flex-area {
+      display: flex;
+      text-align: center;
+      justify-content: center;
+      margin: 0 auto;
+    }
+
+    .flex-box {
+      width: 40%;
+      margin: 0 20px;
+    }
+  </style>
+</th:block>
+
+<th:block layout:fragment="js">
+  <script>
+    $('.selectpicker').selectpicker({
+      style: 'btn-info',
+      size: 3
+    });
+  </script>
+</th:block>
+
+<!-- 메인 -->
+<div class="main-area" layout:fragment="content">
+  <form action="/mall/searchResult" method="get">
+
+    <div class="input-group mb-3">
+      <input type="text" class="form-control" placeholder="작가나 제목을 입력하세요." aria-describedby="button-addon2" name="searchKeyword">
+      <button class="btn btn-outline-secondary" type="submit" id="button-addon2">검색</button>
+    </div>
+  </form>
+
+  <div class="flex-area">
+    <div class="flex-box">
+      <ul class="list-group">
+        <li class="list-group-item active" aria-current="true">국내도서</li>
+        <li class="list-group-item"><a href="/mall/searchResult?searchKeyword=111">소설/시/희곡</a></li>
+        <li class="list-group-item"><a href="/mall/searchResult?searchKeyword=112">에세이</a></li>
+        <li class="list-group-item"><a href="/mall/searchResult?searchKeyword=121">경제/경영</a></li>
+        <li class="list-group-item"><a href="/mall/searchResult?searchKeyword=122">자기계발</a></li>
+        <li class="list-group-item"><a href="/mall/searchResult?searchKeyword=131">역사</a></li>
+        <li class="list-group-item"><a href="/mall/searchResult?searchKeyword=132">사회/정치</a></li>
+        <li class="list-group-item"><a href="/mall/searchResult?searchKeyword=141">수험서</a></li>
+        <li class="list-group-item"><a href="/mall/searchResult?searchKeyword=142">대학교재</a></li>
+        <li class="list-group-item"><a href="/mall/searchResult?searchKeyword=151">어린이</a></li>
+        <li class="list-group-item"><a href="/mall/searchResult?searchKeyword=161">여행</a></li>
+        <li class="list-group-item"><a href="/mall/searchResult?searchKeyword=171">만화</a></li>
+      </ul>
+    </div>
+    <div class="flex-box">
+      <ul class="list-group">
+        <li class="list-group-item active" aria-current="true">해외</li>
+        <li class="list-group-item"><a href="/mall/searchResult?searchKeyword=211">소설/시/희곡</a></li>
+        <li class="list-group-item"><a href="/mall/searchResult?searchKeyword=212">에세이</a></li>
+        <li class="list-group-item"><a href="/mall/searchResult?searchKeyword=221">경제/경영</a></li>
+        <li class="list-group-item"><a href="/mall/searchResult?searchKeyword=222">자기계발</a></li>
+        <li class="list-group-item"><a href="/mall/searchResult?searchKeyword=231">역사</a></li>
+        <li class="list-group-item"><a href="/mall/searchResult?searchKeyword=232">사회/정치</a></li>
+        <li class="list-group-item"><a href="/mall/searchResult?searchKeyword=241">수험서</a></li>
+        <li class="list-group-item"><a href="/mall/searchResult?searchKeyword=242">대학교재</a></li>
+        <li class="list-group-item"><a href="/mall/searchResult?searchKeyword=251">어린이</a></li>
+        <li class="list-group-item"><a href="/mall/searchResult?searchKeyword=261">여행</a></li>
+        <li class="list-group-item"><a href="/mall/searchResult?searchKeyword=271">만화</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+</html>

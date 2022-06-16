@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/layout">
+  <th:block layout:fragment="css">
+    <style>
+      .main-area {
+        max-width: 1140px;
+        margin: 0 auto;
+      }
+
+      #title {
+        margin-bottom: 30px;
+      }
+
+      #btn-area {
+        text-align: center;
+      }
+    </style>
+  </th:block>
+
+<!-- 메인 -->
+  <div layout:fragment="content">
+  <main class="main-area">
+    <div id="title">
+      <h1>나의 1:1 문의 내역</h1>
+    </div>
+
+    <table class="table caption-top">
+      <colgroup>
+        <col width="20%">
+        <col width="50%">
+        <col width="20%">
+        <col width="10%">
+      </colgroup>
+      <thead class="table-light">
+      <tr>
+        <th scope="col">카테고리</th>
+        <th scope="col">문의 제목</th>
+        <th scope="col">등록일</th>
+        <th scope="col">답변상태</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:if="${not #lists.isEmpty(list)}" th:each="list : ${list}">
+        <td>
+          <span th:switch="${list.q_cate}">
+            <b><span th:case="1">[반품, 교환 문의]</span></b>
+            <b><span th:case="2">[결제 문의]</span></b>
+            <b><span th:case="3">[상품 문의]</span></b>
+            <b><span th:case="4">[배송 문의]</span></b>
+            <b><span th:case="5">[개인정보 문의]</span></b>
+            <b><span th:case="6">[기타 문의]</span></b>
+          </span>
+        </td>
+        <td class="text-left">
+          <a th:href="@{/cs/qna/viewMemQna(q_no=${list.q_no})}" th:text="${list.q_title}"></a>
+        </td>
+        <td th:text="${list.q_date}"></td>
+        <td th:switch="${list.access_level}">
+          <span th:case="0">답변대기</span>
+          <span th:case="1">답변완료</span>
+        </td>
+      </tr>
+      <tr th:unless="${not #lists.isEmpty(list)}" style="text-align: center">
+        <td colspan="5">문의 내역이 없습니다.</td>
+      </tr>
+      </tbody>
+    </table>
+    <div class="mb-3" id="btn-area">
+      <a class="btn btn-primary" th:href="@{/cs/qna/writeQna}">문의 작성</a>
+    </div>
+  </main>
+  </div>
+
+</html>

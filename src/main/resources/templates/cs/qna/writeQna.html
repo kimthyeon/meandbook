@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/layout">
+  <th:block layout:fragment="css">
+    <style>
+      textarea{
+        resize: none;
+      }
+
+      #btn-area {
+        text-align: center;
+      }
+    </style>
+  </th:block>
+
+  <div layout:fragment="content">
+<!-- 메인 -->
+<main class="container">
+  <form th:action="@{/cs/qna/writeQna_ok}">
+    <input type="hidden" class="form-control" th:name="q_pwd" th:value="0">
+    <input type="hidden" class="form-control" th:name="access_level" th:value="0">
+    <input type="hidden" class="form-control" th:name="mem_no" th:value="${session.mem_no}">
+
+    <div class="mb-3">
+      <label for="exampleFormControlSelect" class="form-label">카테고리</label>
+      <select class="form-select" id="exampleFormControlSelect" aria-label="Default select example" th:name="q_cate">
+        <option value="1">[반품,교환 문의]</option>
+        <option value="2">[결제 문의]</option>
+        <option value="3">[상품 문의]</option>
+        <option value="4">[배송 문의]</option>
+        <option value="5">[개인정보 문의]</option>
+        <option value="6">[기타 문의]</option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label for="exampleFormControlInput1" class="form-label">문의 제목</label>
+      <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="제목을 입력하세요." th:name="q_title">
+    </div>
+
+    <div class="mb-3">
+      <label for="exampleFormControlTextarea" class="form-label">문의 내용</label>
+      <textarea class="form-control" id="exampleFormControlTextarea" rows="10" th:name="q_content"></textarea>
+    </div>
+
+    <div class="mb-3" id="btn-area">
+      <input class="btn btn-primary" th:type="submit" value="등록하기">
+      <input class="btn btn-primary" type="reset" value="다시쓰기">
+      <a th:href="@{/member/memberMain}" class="btn btn-primary">메인으로</a>
+    </div>
+  </form>
+</main>
+  </div>
+</html>
