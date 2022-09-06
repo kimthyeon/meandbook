@@ -12,7 +12,9 @@ MySQL의 계정 root , 비밀번호 1234, 포트번호는 3307을 이용합니�
   <li>java -jar meandbooks-team2-0.0.1-SNAPSHOT.jar 입력</li>
   <li><a href='http://localhost:8089/' target='_blank'>http://localhost:8089/로 접속</li>
 </ol>
-관리자 ID/PW : admin/1234
-일반회원 ID/PW : normalmember/123123
 
 <br>
+관리자 ID/PW : admin/1234
+<br>
+일반회원 ID/PW : normalmember/123123
+
